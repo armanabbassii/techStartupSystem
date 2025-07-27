@@ -1,15 +1,25 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import model.Task;
+import service.TaskService;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Task task1 = new Task("this is correct add task", 10);
+        Task task2 = new Task(null, 60);
+        Task task3 = new Task("this is negative estimated time task", -50);
+        Task task4 = new Task("this is correct update task", 99);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        //addTask method
+        TaskService.addTask(task1);
+        TaskService.addTask(task2);
+        TaskService.addTask(task4);
+
+        //updateTask method
+        TaskService.updateTask(task4);
+        TaskService.updateTask(task2);
+        TaskService.updateTask(task3);
+
+        //removeTask method
+        TaskService.removeTask(task1);
+
     }
 }

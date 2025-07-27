@@ -14,6 +14,10 @@ public class TaskService {
         if (task.getEstimatedTime() < 0) {
             throw new InvalidEstimatedTime("Estimate time must be greater that 0");
         }
+//        if(task.getEstimatedTime() == null){
+//            throw new InvalidEstimatedTime("estimated time not be null");
+//        }
+
 
         String addTaskQuery = "insert into(description,estimatedTime) values(?,?)";
         DBConnection.executeLine(addTaskQuery, task.getDescription(), task.getEstimatedTime());
