@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) {
         Task task1 = new Task("this is correct add task", 10);
-        Task task2 = new Task(null, 60);
-        Task task3 = new Task("this is negative estimated time task", -50);
+        Task task2 = new Task("this is null task", 6);
+        Task task3 = new Task("this is negative estimated time task", 50);
         Task task4 = new Task("this is correct update task", 99);
 
         Employee employee1 = new Employee(1, "Arman");
@@ -26,59 +26,48 @@ public class Main {
         TaskService.updateTask(task1);
 
         //removeTask method
-        TaskService.removeTask(task1);
+//        TaskService.removeTask(task1);
 
-//
-//        List<String> taskList = new ArrayList<>();
-//        taskList.add(String.valueOf(task1));
-//        taskList.add(String.valueOf(task2));
-//        taskList.add(String.valueOf(task3));
-//        taskList.add(String.valueOf(task4));
-//
-//        for (String s : taskList) {
-//            System.out.println(s);
-//        }
-////-------------------------
-////        List<Employee> employees = List.of(employee1, employee2, employee3);
-////        Set<Task> departments = employees.stream().flatMap(employee ->
-////                employee.getEmployeeId().stream()).collect(Collectors.toSet());
-////
-////        for (Task d : departments) {
-////            for (Employee employee : employees) {
-////                if (employee.getEmployeeId().contains(d)) {
-////                    if (!result.containsKey(d)) {
-////                        result.put(d, new ArrayList<Employee>());
-////                    }
-////                    result.get(d).add(employee);
-////                }
-////            }
-////        }
-////        return result;
-////--------------------------
-//
-//        // Creating object for Map.
-//        Map<Integer, String> map
-//                = new HashMap<Integer, String>();
-//
-//        // Adding Elements using Map.
-//        map.put(employee1.getEmployeeId(), task1.getDescription());
-//        map.put(employee2.getEmployeeId(), task2.getDescription());
-//        map.put(employee3.getEmployeeId(), task3.getDescription());
-//
-//        // Elements can traverse in any order
-//        for (Map.Entry m : map.entrySet()) {
-//            System.out.println(m.getKey() + " "
-//                    + m.getValue());
-//        }
+        Map<Integer, List<Task>> employeeTask = new HashMap<>();
+        employeeTask.put(employee1.getEmployeeId(), new ArrayList<>(Arrays.asList(task1, task4)));
+        employeeTask.put(employee2.getEmployeeId(), new ArrayList<>(List.of(task2)));
+        employeeTask.put(employee3.getEmployeeId(), new ArrayList<>(List.of(task3)));
+        for (Map.Entry<Integer, List<Task>> m : employeeTask.entrySet()) {
+            Integer employeeId = m.getKey();
+            List<Task> tasks = m.getValue();
+            System.out.println("emloyeeId:" + employeeId);
+            for (Task task : tasks) {
+                System.out.println(
+                        "Description: " + task.getDescription() +
+                                ", Estimated Time: " + task.getEstimatedTime());
+            }
+        }
+        System.out.println("-------------------");
+        employeeTask.entrySet().stream().flatMap(entry -> entry.getValue().stream().map(task -> "employeeId: " + entry.getKey() + " taskId: " + task.getTaskId() + " description: " + task.getDescription() + "estimateTime: " + task.getEstimatedTime())).forEach(System.out::println);
+        System.out.println("-------------------");
+
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(task1);
+        taskList.add(task2);
+        taskList.add(task3);
+        taskList.add(task4);
+
+//taskId? how?
+        System.out.println("-------------------");
+        for (Task task : taskList) {
+            System.out.println("Description: " + task.getDescription() + ", Estimated Time: " + task.getEstimatedTime());
+        }
+        System.out.println("-------------------");
+
+        List<Task> filter = taskList.stream()
+                .filter(x -> x.getEstimatedTime() > 10)
+                .toList();
+        System.out.println(filter);
+
+        System.out.println("\nTasks with estimatedTime > 10:");
+        for (Task task : filter) {
+            System.out.println("Description: " + task.getDescription() + ", Estimated Time: " + task.getEstimatedTime());
+        }
     }
 }
-
-
-//Maintain a collection of employees and their tasks — use a
-//structure with fast lookups and grouping (e.g.,
-//Map<EmployeeID, List<Task>>).
-// چیزی من فهمیدم از این،
-// این بود از دوتا اینترفیس مپ و لیست باید استفاده کنیم
-// که داخل لیست کارکنان رو بریزیم
-// ، و هر کدومو مپ کنیم به یک تسک
-// و اونجا بیایم فیلتر کنیم.
