@@ -1,7 +1,7 @@
 package exception;
 
-public class InvalidEstimatedTime extends RuntimeException {
-    public InvalidEstimatedTime(String message) {
-        super(message);
+public class InvalidEstimatedTime extends IllegalArgumentException {
+    public InvalidEstimatedTime() {
+//        super(message);
     }
 }
